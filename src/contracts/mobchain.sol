@@ -138,30 +138,35 @@ contract MobChain {
         accounts[addressLender].carLender.carCondition = carCondition;
     }
 
-    function arrive() public view returns(uint256) {
-        require(accounts[msg.sender].carUser.busy == false);
-        accounts[msg.sender].carUser.busy = true;
-        address addressLender = accounts[msg.sender].carUser.addressLender;
+    function arrive(uint256 distance, uint256 additionalCost, address addressLender) public view returns(uint256) {
+        /*require(accounts[msg.sender].carUser.busy == false);
+        accounts[msg.sender].carUser.busy = true;*/
+
+        //skipt it
+        /*address addressLender = accounts[msg.sender].carUser.addressLender;*/
         accounts[addressLender].carLender.available = false;
 
-        uint256 finalCost = accounts[msg.sender].carUser.expCost;
+        //uint256 finalCost = accounts[msg.sender].carUser.expCost;
+        uint256 finalCost = getCost(distance, additionalCost);
 
         //transfer final cost from user to lender
         MobCoin mobcoin = MobCoin(mobcoinAddress);
-        mobcoin.transfer(accounts[msg.sender].carUser.addressLender, finalCost);
-
+        //mobcoin.transfer(accounts[msg.sender].carUser.addressLender, finalCost);
+        //mobcoin.transfer(addressLender, finalCost);
+        mobcoin.transferFrom(msg.sender,addressLender, finalCost);
 
         //update sustainability
         SusToken sustoken = SusToken(sustokenAddress);
-        if (accounts[accounts[msg.sender].carUser.addressLender].carLender.carType == true) { //1 is electr.car
+        //if (accounts[accounts[msg.sender].carUser.addressLender].carLender.carType == true) { //1 is electr.car
+        if (accounts[addressLender].carLender.carType == true) { //1 is electr.car
         sustoken.update(msg.sender, 5); 
         } else {
         sustoken.update(msg.sender, -5); 
         }
 
-        accounts[addressLender].carLender.available = true;
-        accounts[addressLender].carLender.addressPreuser = msg.sender; 
-        accounts[msg.sender].carUser.busy = false;
+        /*accounts[addressLender].carLender.available = true;
+        //accounts[addressLender].carLender.addressPreuser = msg.sender; 
+        accounts[msg.sender].carUser.busy = false;*/
         return (finalCost);
     }
 
