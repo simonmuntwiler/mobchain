@@ -8,7 +8,7 @@ contract MobChain {
     struct User {
         address addressLender;
         bool busy;
-        int256 expCost;
+        uint256 expCost;
     }
     struct Lender {
         uint256 carPosition;
@@ -23,7 +23,7 @@ contract MobChain {
         Lender carLender;
     }
 
-    mapping(address => Account) public accounts;
+    mapping(address => Account) accounts;
     address mobcoinAddress;
     address reptokenAddress;
     address sustokenAddress;
@@ -61,8 +61,8 @@ contract MobChain {
         _balance = mobcoin.getBalance(msg.sender);
     }
 
-    function expectedCost(int256 distance, int256 additionalCost) public returns(int256) {
-        int256 expCost = getCost(distance, additionalCost);
+    function expectedCost(uint256 distance, uint256 additionalCost) public returns(int256) {
+        uint256 expCost = getCost(distance, additionalCost);
         accounts[msg.sender].carUser.expCost = expCost;
         MobCoin mobcoin = MobCoin(mobcoinAddress);
         uint256 mobBalance = mobcoin.getBalance(msg.sender);
@@ -70,28 +70,28 @@ contract MobChain {
         if (mobBalance < expCost) {
             return (-1);
         } else {
-            return (expCost);
+            return (int256(expCost));
         } 
     }
 
-    function getCost(int256 distance, int256 additionalCost) public returns(int256) {
-        int256 distancePrice = 1;
-        int256 cost = distance * distancePrice;
-        int256 discountFactor = getDiscount();
-        int256 expCost = cost * discountFactor / 100000 + additionalCost;
+    function getCost(uint256 distance, uint256 additionalCost) public returns(uint256) {
+        uint256 distancePrice = 1;
+        uint256 cost = distance * distancePrice;
+        uint256 discountFactor = getDiscount();
+        uint256 expCost = cost * discountFactor / 100000 + additionalCost;
         return (expCost);
     }
 
-    function getDiscount() public pure returns(int256) {
+    function getDiscount() public returns(uint256) {
         RepToken reptoken = RepToken(reptokenAddress);//RepToken.balanceOf(userAddress) * 1000;
         SusToken sustoken = SusToken(sustokenAddress);//SusToken.balanceOf(userAddress);
-        int256 repBalance = reptoken.getBalance(msg.sender);
-        int256 susBalance = sustoken.getBalance(msg.sender);
-        int256 discountFactor = 120000 - repBalance / 100 * 20 - susBalance / 100 * 20;
+        uint256 repBalance = uint256(reptoken.getBalance(msg.sender));
+        uint256 susBalance = uint256(sustoken.getBalance(msg.sender));
+        uint256 discountFactor = 120000 - repBalance / 100 * 20 - susBalance / 100 * 20;
         return (discountFactor);
     }
 
-    function rate(uint256 carCondition) public {
+    function rate(uint8 carCondition) public {
         address addressLender = accounts[msg.sender].carUser.addressLender;
         address addressPreuser = accounts[addressLender].carLender.addressPreuser;
         require(addressPreuser != 0x0);
@@ -106,13 +106,13 @@ contract MobChain {
         accounts[addressLender].carLender.carCondition = carCondition;
     }
 
-    function arrive() public pure returns(int256) {
-        require(accounts[msg.sender].carUser.busy == 0);
-        accounts[msg.sender].carUser.busy = 1;
+    function arrive() public returns(uint256) {
+        require(accounts[msg.sender].carUser.busy == false);
+        accounts[msg.sender].carUser.busy = true;
         address addressLender = accounts[msg.sender].carUser.addressLender;
-        accounts[addressLender].carLender.available = 0;
+        accounts[addressLender].carLender.available = false;
 
-        int256 finalCost = accounts[msg.sender].carUser.expCost;
+        uint256 finalCost = accounts[msg.sender].carUser.expCost;
 
         //transfer final cost from user to lender
         MobCoin mobcoin = MobCoin(mobcoinAddress);
@@ -121,15 +121,15 @@ contract MobChain {
 
         //update sustainability
         SusToken sustoken = SusToken(sustokenAddress);
-        if (accounts[accounts[msg.sender].carUser.addressLender].carLender.carType == 1) { //1 is electr.car
+        if (accounts[accounts[msg.sender].carUser.addressLender].carLender.carType == true) { //1 is electr.car
         sustoken.update(msg.sender, 5); 
         } else {
         sustoken.update(msg.sender, -5); 
         }
 
-        accounts[addressLender].carLender.available = 1;
-        accounts[addressLender].carLender.preuser = msg.sender; 
-        accounts[msg.sender].carUser.busy = 0;
+        accounts[addressLender].carLender.available = true;
+        accounts[addressLender].carLender.addressPreuser = msg.sender; 
+        accounts[msg.sender].carUser.busy = false;
         return (finalCost);
     }
 
