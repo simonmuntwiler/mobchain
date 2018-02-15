@@ -48,15 +48,14 @@ contract MobChain {
     }
 
     function expectedCost(int256 distance, int256 additionalCost) public returns(int256) {
-        expCost = getCost(int256 distance, int256 additionalCost);
+        int256 expCost = getCost(distance, additionalCost);
         accounts[msg.sender].carUser.expCost = expCost;
         MobCoin mobcoin = MobCoin(mobcoinAddress);
-        int256 mobBalance = mobcoin.balanceOf[msg.sender];
+        int256 mobBalance = mobcoin.getBalance(msg.sender);
         
         if (mobBalance < expCost) {
             return (-1);
-        }
-        else {
+        } else {
             return (expCost);
         } 
     }
@@ -72,21 +71,20 @@ contract MobChain {
     function getDiscount() public pure returns(int256) {
         RepToken reptoken = RepToken(reptokenAddress);//RepToken.balanceOf(userAddress) * 1000;
         SusToken sustoken = SusToken(sustokenAddress);//SusToken.balanceOf(userAddress);
-        int256 repBalance = reptoken.balanceOf[msg.sender];
-        int256 susBalance = sustoken.balanceOf[msg.sender];
-        int256 discountFactor = 120000 -repBalance / 100 * 20 -susBalance / 100 * 20;
+        int256 repBalance = reptoken.getBalance(msg.sender);
+        int256 susBalance = sustoken.getBalance(msg.sender);
+        int256 discountFactor = 120000 - repBalance / 100 * 20 - susBalance / 100 * 20;
         return (discountFactor);
     }
 
     function rate(uint256 carCondition) public {
         address lenderAddress = accounts[msg.sender].carUser.lenderAddress;
         address preuserAddress = accounts[lenderAddress].carLender.preuserAddress;
-        require(preuserAddress != 0x0)
+        require(preuserAddress != 0x0);
         RepToken reptoken = RepToken(reptokenAddress);
         if (carCondition < accounts[lenderAddress].carLender.carCondition) {
             reptoken.update(preuserAddress, -5);
-        }
-        else {
+        } else {
             reptoken.update(preuserAddress, 1);
         }
 
@@ -111,8 +109,7 @@ contract MobChain {
         SusToken sustoken = SusToken(sustokenAddress);
         if (accounts[accounts[msg.sender].carUser.addressLender].carLender.carType == 1) { //1 is electr.car
         sustoken.update(msg.sender, 5); 
-        } 
-        else {
+        } else {
         sustoken.update(msg.sender, -5); 
         }
 
