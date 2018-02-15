@@ -2,7 +2,7 @@ pragma solidity ^0.4.16;
 
 import {MobLib} from "./moblib.sol";
 
-interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }
+// interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }
 
 contract SusToken {
     // Public variables of the token

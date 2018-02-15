@@ -1,45 +1,64 @@
-pragma solidity ^0.4.16;
+pragma solidity ^0.4.1;
 
-import "./mobcoin.sol";
-import "./reptoken.sol";
-import "./sustoken.sol";
+import  "./mobcoin.sol";
+import  "./reptoken.sol";
+import  "./sustoken.sol";
 
-contract Mobchain {
-struct user {
-    uint256 addressLender;
-    bool busy;
-    int256 expCost;
-}
-struct lender {
-    uint256 carPosition;
-    uint256 carCondition;
-    bool available;
-    uint256 addressPreuser;
-    bool carType;    
-}
-struct account {
-    user carUser;
-    lender carLender;
-} 
-
-function Mobchain public {
-
-} 
-
-address userAddress;
-mapping(address => account) accounts;
-
-function expectedCost(int256 distance, int256 additionalCost) public returns(int256) {
-    userAddress = msg.sender;
-    expCost = getCost(int256 distance, int256 additionalCost);
-    accounts[userAddress].user.expCost = expCost;
-    int256 mobBalance = 10000; // read out balance of user
-    if (mobBalance < expCost) {
-        return (-1);
+contract MobChain {
+    struct User {
+        address addressLender;
+        bool busy;
     }
-    else {
-        return (expCost);
-    } 
+    struct Lender {
+        uint256 carPosition;
+        uint8 carCondition;
+        bool available;
+        address addressPreuser;
+        bool carType;    
+    }
+    struct Account {
+        string name;
+        User carUser;
+        Lender carLender;
+    }
+
+    //Account[] accounts;
+    mapping(address => Account) accounts;
+    address mobcoinAddress;
+    address reptokenAddress;
+    address sustokenAddress;
+    
+    function MobChain() public {
+        mobcoinAddress = new MobCoin();
+        reptokenAddress = new RepToken();
+        sustokenAddress = new SusToken();
+
+    }
+
+    function addUser(string _name, bool _carType) payable public {
+
+        require(msg.value > 0.25 ether);
+        accounts[msg.sender].name = _name;
+        accounts[msg.sender].carLender.carType = _carType;
+        accounts[msg.sender].carLender.available = true;
+
+        //give mobcoins to user
+        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        mobcoin.transfer(msg.sender, msg.value * 1000);
+
+    }
+
+    function expectedCost(int256 distance, int256 additionalCost) public returns(int256) {
+        userAddress = msg.sender;
+        expCost = getCost(int256 distance, int256 additionalCost);
+        accounts[userAddress].user.expCost = expCost;
+        int256 mobBalance = 10000; // read out balance of user
+        if (mobBalance < expCost) {
+            return (-1);
+        }
+        else {
+            return (expCost);
+        } 
 }
 
 function getCost(int256 distance, int256 additionalCost) public returns(int256) {
@@ -84,6 +103,5 @@ function arrive() public pure returns(int256){
     return (finalCost);
    
 }
-
 
 }
