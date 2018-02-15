@@ -24,17 +24,17 @@ contract MobChain {
     }
 
     mapping(address => Account) accounts;
-    address mobcoinAddress;
-    address reptokenAddress;
-    address sustokenAddress;
+    MobCoin mobcoin;
+    RepToken reptoken;
+    SusToken sustoken;
     address[] public userA;
 
     address bankAddress = this;
     
     function MobChain() public {
-        mobcoinAddress = new MobCoin();
-        reptokenAddress = new RepToken();
-        sustokenAddress = new SusToken();
+        mobcoin = new MobCoin();
+        reptoken = new RepToken();
+        sustoken = new SusToken();
 
     }
 
@@ -46,15 +46,17 @@ contract MobChain {
         accounts[msg.sender].carUser.busy = false;
 
         //give mobcoins to user
-        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        //MobCoin mobcoin = MobCoin(mobcoinAddress);
         //mobcoin.transferFrom(bankAddress,msg.sender, msg.value * 1000);
+        //mobcoin.transferFrom(bankAddress,msg.sender, (0.25 ether) * 1000); //remove this when paying works
         mobcoin.transferFrom(bankAddress,msg.sender, (0.25 ether) * 1000); //remove this when paying works
 
         //initialize reptokens and sustokens to 50
-        RepToken reptoken = RepToken(reptokenAddress);
+        //RepToken reptoken = RepToken(reptokenAddress);
         reptoken.update(msg.sender,50);
-        SusToken sustoken = SusToken(sustokenAddress);
+        //SusToken sustoken = SusToken(sustokenAddress);
         sustoken.update(msg.sender,50);
+
         userA.push(msg.sender);
 
     }
@@ -66,13 +68,13 @@ contract MobChain {
 
     function getBankBalance() public view returns (uint256 _balance) {
         
-        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        //MobCoin mobcoin = MobCoin(mobcoinAddress);
         _balance = mobcoin.getBalance(bankAddress);
     }
 
     function getUserBalance() public view returns (uint256 _balance) {
         
-        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        //MobCoin mobcoin = MobCoin(mobcoinAddress);
         _balance = mobcoin.getBalance(msg.sender);
     }
 
@@ -82,19 +84,19 @@ contract MobChain {
 
     function getUserRep() public view returns (int16 _reputation) {
 
-        RepToken reptoken = RepToken(reptokenAddress);
+        //RepToken reptoken = RepToken(reptokenAddress);
         _reputation = reptoken.getBalance(msg.sender);
     }
 
     function getUserSus() public view returns (int16 _sus) {
 
-        SusToken sustoken = SusToken(sustokenAddress);
+        //SusToken sustoken = SusToken(sustokenAddress);
         _sus = sustoken.getBalance(msg.sender);
     }
 
     function carRequest(uint256 distance, uint256 additionalCost, address addressLender) public view returns(int256) {
         uint256 expCost = getCost(distance, additionalCost);
-        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        //MobCoin mobcoin = MobCoin(mobcoinAddress);
         uint256 mobBalance = mobcoin.getBalance(msg.sender);
         
         if (mobBalance < expCost) {
@@ -115,8 +117,8 @@ contract MobChain {
     }
 
     function getDiscount() public view returns(uint256) {
-        RepToken reptoken = RepToken(reptokenAddress);//RepToken.balanceOf(userAddress) * 1000;
-        SusToken sustoken = SusToken(sustokenAddress);//SusToken.balanceOf(userAddress);
+        //RepToken reptoken = RepToken(reptokenAddress);//RepToken.balanceOf(userAddress) * 1000;
+        //SusToken sustoken = SusToken(sustokenAddress);//SusToken.balanceOf(userAddress);
         uint256 repBalance = uint256(reptoken.getBalance(msg.sender)) * 1000;
         uint256 susBalance = uint256(sustoken.getBalance(msg.sender)) * 1000;
         uint256 discountFactor = 120000 - repBalance / 100 * 20 - susBalance / 100 * 20;
@@ -127,7 +129,7 @@ contract MobChain {
         address addressLender = accounts[msg.sender].carUser.addressLender;
         address addressPreuser = accounts[addressLender].carLender.addressPreuser;
         require(addressPreuser != 0x0);
-        RepToken reptoken = RepToken(reptokenAddress);
+        //RepToken reptoken = RepToken(reptokenAddress);
         if (carCondition < accounts[addressLender].carLender.carCondition) {
             reptoken.update(addressPreuser, -5);
         } else {
@@ -138,7 +140,7 @@ contract MobChain {
         accounts[addressLender].carLender.carCondition = carCondition;
     }
 
-    function arrive(uint256 distance, uint256 additionalCost, address addressLender) public view returns(uint256) {
+    function arrive(uint256 distance, uint256 additionalCost, address addressLender) public returns(uint256) {
         /*require(accounts[msg.sender].carUser.busy == false);
         accounts[msg.sender].carUser.busy = true;*/
 
@@ -148,15 +150,16 @@ contract MobChain {
 
         //uint256 finalCost = accounts[msg.sender].carUser.expCost;
         uint256 finalCost = getCost(distance, additionalCost);
+        //uint256 finalCost = 100000;
 
         //transfer final cost from user to lender
-        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        //MobCoin mobcoin = MobCoin(mobcoinAddress);
         //mobcoin.transfer(accounts[msg.sender].carUser.addressLender, finalCost);
         //mobcoin.transfer(addressLender, finalCost);
         mobcoin.transferFrom(msg.sender,addressLender, finalCost);
 
         //update sustainability
-        SusToken sustoken = SusToken(sustokenAddress);
+        //SusToken sustoken = SusToken(sustokenAddress);
         //if (accounts[accounts[msg.sender].carUser.addressLender].carLender.carType == true) { //1 is electr.car
         if (accounts[addressLender].carLender.carType == true) { //1 is electr.car
         sustoken.update(msg.sender, 5); 
