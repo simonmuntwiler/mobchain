@@ -39,7 +39,7 @@ function expectedCost(int256 distance, int256 additionalCost) public returns(int
         return (-1);
     }
     else {
-    return (expCost);
+        return (expCost);
     } 
 }
 
@@ -48,7 +48,7 @@ function getDiscount() public pure returns(int256) {
     //SusToken.balanceOf(userAddress);
     int256 repBalance = 50000;
     int256 susBalance = 100000;
-    int256 discountFactor = repBalance / 100 * 20 - 10000 +susBalance / 100 * 20 - 10000 + 100000;
+    int256 discountFactor = 12000 -repBalance / 100 * 20 -susBalance / 100 * 20;
     return (discountFactor);
 }
 
