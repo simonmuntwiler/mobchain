@@ -51,7 +51,7 @@ contract MobChain {
     function expectedCost(int256 distance, int256 additionalCost) public returns(int256) {
         userAddress = msg.sender;
         expCost = getCost(int256 distance, int256 additionalCost);
-        accounts[userAddress].user.expCost = expCost;
+        accounts[userAddress].carUser.expCost = expCost;
         int256 mobBalance = 10000; // read out balance of user
         if (mobBalance < expCost) {
             return (-1);
@@ -79,27 +79,42 @@ function getDiscount() public pure returns(int256) {
 }
 
 function rate(uint256 carCondition) public {
-    address lenderAddress = accounts[userAddress].user.lenderAddress;
-    address preuserAddress = accounts[lenderAddress].lender.preuserAddress;
+    address lenderAddress = accounts[userAddress].carUser.lenderAddress;
+    address preuserAddress = accounts[lenderAddress].carLender.preuserAddress;
     require(preuserAddress != 0x0)
-    if (carCondition < accounts[lenderAddress].lender.carCondition) {
+    if (carCondition < accounts[lenderAddress].carLender.carCondition) {
         //lower trust coins 
     }
     else {
         //increase trust coins
     }
-    accounts[lenderAddress].lender.preuserAddress = 0x0;
-    accounts[lenderAddress].lender.carCondition = carCondition;
+    accounts[lenderAddress].carLender.preuserAddress = 0x0;
+    accounts[lenderAddress].carLender.carCondition = carCondition;
 }
 
-function arrive() public pure returns(int256){
-    require(accounts[userAddress].user.busy == 0);
-    accounts[userAddress].user.busy = 1;
-    int256 finalCost = accounts[userAddress].user.expCost;
+function arrive() public pure returns(int256) {
 
+    require(accounts[userAddress].carUser.busy == 0);
+    accounts[userAddress].carUser.busy = 1;
+    accounts[accounts[userAddress].carUser.addressLender].carLender.available = 0;
 
-    accounts[userAddress].lender.available = 1;
-    accounts[userAddress].user.busy = 0;
+    int256 finalCost = accounts[userAddress].carUser.expCost;
+
+    //transfer final cost from user to lender
+    MobCoin mobcoin = MobCoin(mobcoinAddress);
+    mobcoin.transfer(accounts[msg.sender].carUser.addressLender, finalCost);
+
+    //update sustainability
+    if accounts[accounts[userAddress].carUser.addressLender].carLender.carType == 1 {
+        SusToken sustoken = SusToken(sustokenAddress);
+        sustoken.update(msg.sender, );  
+   
+   
+   };//1 is electr.car
+
+    accounts[accounts[userAddress].carUser.addressLender].carLender.available = 1;
+    accounts[userAddress].carLender.preuser = userAddress; 
+    accounts[userAddress].carUser.busy = 0;
     return (finalCost);
    
 }
