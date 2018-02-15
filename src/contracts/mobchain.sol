@@ -67,6 +67,12 @@ contract MobChain {
         _balance = mobcoin.getBalance(msg.sender);
     }
 
+    function getUserReputation() public view returns (int16 _reputation) {
+
+        RepToken reptoken = RepToken(reptokenAddress);
+        _reputation = reptoken.getBalance(msg.sender);
+    }
+
     function expectedCost(uint256 distance, uint256 additionalCost) public returns(int256) {
         uint256 expCost = getCost(distance, additionalCost);
         accounts[msg.sender].carUser.expCost = expCost;
