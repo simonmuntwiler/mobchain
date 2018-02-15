@@ -75,6 +75,10 @@ contract MobChain {
         _balance = mobcoin.getBalance(msg.sender);
     }
 
+    function getUserName(address addr) public view returns (string _name) {
+        return accounts[addr].name;
+    }
+
     function getUserRep() public view returns (int16 _reputation) {
 
         RepToken reptoken = RepToken(reptokenAddress);
