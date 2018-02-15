@@ -53,7 +53,7 @@ contract MobChain {
         reptoken.update(msg.sender,50);
         SusToken sustoken = SusToken(sustokenAddress);
         sustoken.update(msg.sender,50);
-        userA.push(msg.sender) -1;
+        userA.push(msg.sender);
 
     }
     
