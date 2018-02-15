@@ -22,11 +22,12 @@ contract MobChain {
         Lender carLender;
     }
 
-    //Account[] accounts;
     mapping(address => Account) accounts;
     address mobcoinAddress;
     address reptokenAddress;
     address sustokenAddress;
+
+    address bankAddress = this;
     
     function MobChain() public {
         mobcoinAddress = new MobCoin();
@@ -44,8 +45,20 @@ contract MobChain {
 
         //give mobcoins to user
         MobCoin mobcoin = MobCoin(mobcoinAddress);
-        mobcoin.transfer(msg.sender, msg.value * 1000);
+        mobcoin.transferFrom(bankAddress,msg.sender, msg.value * 1000);
 
+    }
+
+    function getBankBalance() public returns (uint256 _balance) {
+        
+        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        _balance = mobcoin.getBalance(bankAddress);
+    }
+
+    function getUserBalance() public returns (uint256 _balance) {
+        
+        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        _balance = mobcoin.getBalance(msg.sender);
     }
 
     function expectedCost(int256 distance, int256 additionalCost) public returns(int256) {
