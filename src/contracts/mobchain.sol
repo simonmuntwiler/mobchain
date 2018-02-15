@@ -100,10 +100,10 @@ contract MobChain {
     }
 
     function getCost(uint256 distance, uint256 additionalCost) public view returns(uint256) {
-        uint256 distancePrice = 1;
+        uint256 distancePrice = 10 ** uint256(18);
         uint256 cost = distance * distancePrice;
         uint256 discountFactor = getDiscount();
-        uint256 expCost = cost * discountFactor / 100000 + additionalCost;
+        uint256 expCost = cost * discountFactor / 100000 + additionalCost * 10 ** uint256(18);
         return (expCost);
     }
 
