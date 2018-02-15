@@ -43,6 +43,7 @@ contract MobChain {
         accounts[msg.sender].name = _name;
         accounts[msg.sender].carLender.carType = _carType;
         accounts[msg.sender].carLender.available = true;
+        accounts[msg.sender].carUser.busy = false;
 
         //give mobcoins to user
         MobCoin mobcoin = MobCoin(mobcoinAddress);
