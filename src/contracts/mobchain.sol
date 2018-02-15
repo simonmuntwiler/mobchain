@@ -1,8 +1,8 @@
 pragma solidity ^0.4.16;
 
-import "./mobcoin.sol"
-import "./reptoken.sol"
-import "./sustoken.sol"
+import "./mobcoin.sol";
+import "./reptoken.sol";
+import "./sustoken.sol";
 
 contract Mobchain {
 struct user {
@@ -62,8 +62,17 @@ function getDiscount() public pure returns(int256) {
 function rate(uint256 carCondition) public {
     address lenderAddress = accounts[userAddress].user.lenderAddress;
     address preuserAddress = accounts[lenderAddress].lender.preuserAddress;
-    
+    require(preuserAddress != 0x0)
+    if (carCondition < accounts[lenderAddress].lender.carCondition) {
+        //lower trust coins 
+    }
+    else {
+        //increase trust coins
+    }
+    accounts[lenderAddress].lender.preuserAddress = 0x0;
+    accounts[lenderAddress].lender.carCondition = carCondition;
 }
+
 
 
 
