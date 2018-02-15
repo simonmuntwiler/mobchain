@@ -57,7 +57,7 @@ contract MobChain {
 
     }
     
-    function getUser() public returns {
+    function getUser() public returns(address[]) {
         return userA;
     }
 
@@ -74,7 +74,7 @@ contract MobChain {
         _balance = mobcoin.getBalance(msg.sender);
     }
 
-    function expectedCost(uint256 distance, uint256 additionalCost) public returns(int256) {
+    function expectedCost(uint256 distance, uint256 additionalCost) public view returns(int256) {
         uint256 expCost = getCost(distance, additionalCost);
         accounts[msg.sender].carUser.expCost = expCost;
         MobCoin mobcoin = MobCoin(mobcoinAddress);
@@ -87,7 +87,7 @@ contract MobChain {
         } 
     }
 
-    function getCost(uint256 distance, uint256 additionalCost) public returns(uint256) {
+    function getCost(uint256 distance, uint256 additionalCost) public view returns(uint256) {
         uint256 distancePrice = 1;
         uint256 cost = distance * distancePrice;
         uint256 discountFactor = getDiscount();
@@ -95,7 +95,7 @@ contract MobChain {
         return (expCost);
     }
 
-    function getDiscount() public returns(uint256) {
+    function getDiscount() public view returns(uint256) {
         RepToken reptoken = RepToken(reptokenAddress);//RepToken.balanceOf(userAddress) * 1000;
         SusToken sustoken = SusToken(sustokenAddress);//SusToken.balanceOf(userAddress);
         uint256 repBalance = uint256(reptoken.getBalance(msg.sender));
@@ -119,7 +119,7 @@ contract MobChain {
         accounts[addressLender].carLender.carCondition = carCondition;
     }
 
-    function arrive() public returns(uint256) {
+    function arrive() public view returns(uint256) {
         require(accounts[msg.sender].carUser.busy == false);
         accounts[msg.sender].carUser.busy = true;
         address addressLender = accounts[msg.sender].carUser.addressLender;
