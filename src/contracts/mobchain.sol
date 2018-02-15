@@ -125,9 +125,9 @@ contract MobChain {
         return (discountFactor);
     }
 
-    function rate(uint8 carCondition) public {
-        address addressLender = accounts[msg.sender].carUser.addressLender;
-        address addressPreuser = accounts[addressLender].carLender.addressPreuser;
+    function rate(uint8 carCondition,address addressLender,address addressPreuser) public {
+        //address addressLender = accounts[msg.sender].carUser.addressLender;
+        //address addressPreuser = accounts[addressLender].carLender.addressPreuser;
         require(addressPreuser != 0x0);
         //RepToken reptoken = RepToken(reptokenAddress);
         if (carCondition < accounts[addressLender].carLender.carCondition) {
