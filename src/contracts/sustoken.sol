@@ -15,7 +15,7 @@ contract SusToken {
     /**
      * Constructor function
      */
-    function RepToken() public {
+    function SusToken() public {
         owner = msg.sender;
     }
 
