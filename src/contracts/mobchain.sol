@@ -140,16 +140,17 @@ contract MobChain {
         accounts[addressLender].carLender.carCondition = carCondition;
     }
 
-    function arrive(uint256 distance, uint256 additionalCost, address addressLender) public returns(uint256) {
-        /*require(accounts[msg.sender].carUser.busy == false);
-        accounts[msg.sender].carUser.busy = true;*/
+    //function arrive(uint256 distance, uint256 additionalCost, address addressLender) public returns(uint256) {
+    function arrive() public returns(uint256) {
+        require(accounts[msg.sender].carUser.busy == false);
+        accounts[msg.sender].carUser.busy = true;
 
         //skipt it
-        /*address addressLender = accounts[msg.sender].carUser.addressLender;*/
+        address addressLender = accounts[msg.sender].carUser.addressLender;
         accounts[addressLender].carLender.available = false;
 
-        //uint256 finalCost = accounts[msg.sender].carUser.expCost;
-        uint256 finalCost = getCost(distance, additionalCost);
+        uint256 finalCost = accounts[msg.sender].carUser.expCost;
+        //uint256 finalCost = getCost(distance, additionalCost);
         //uint256 finalCost = 100000;
 
         //transfer final cost from user to lender
@@ -167,9 +168,9 @@ contract MobChain {
         sustoken.update(msg.sender, -5); 
         }
 
-        /*accounts[addressLender].carLender.available = true;
-        //accounts[addressLender].carLender.addressPreuser = msg.sender; 
-        accounts[msg.sender].carUser.busy = false;*/
+        accounts[addressLender].carLender.available = true;
+        accounts[addressLender].carLender.addressPreuser = msg.sender; 
+        accounts[msg.sender].carUser.busy = false;
         return (finalCost);
     }
 
