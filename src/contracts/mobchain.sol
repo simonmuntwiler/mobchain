@@ -24,7 +24,7 @@ contract MobChain {
     }
 
     mapping(address => Account) accounts;
-    MobCoin mobcoin;
+    MobCoin public mobcoin;
     RepToken reptoken;
     SusToken sustoken;
     address[] public userA;
