@@ -17,6 +17,10 @@ struct account {
     lender carLender;
 }   
 
+mapping(address => account) accounts;
+
+function expectedCost()
+
 
 
 }
