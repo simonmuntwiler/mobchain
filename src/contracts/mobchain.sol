@@ -73,7 +73,17 @@ function rate(uint256 carCondition) public {
     accounts[lenderAddress].lender.carCondition = carCondition;
 }
 
+function arrive() public pure returns(int256){
+    require(accounts[userAddress].user.busy == 0);
+    accounts[userAddress].user.busy = 1;
+    int256 finalCost = accounts[userAddress].user.expCost;
 
+
+    accounts[userAddress].lender.available = 1;
+    accounts[userAddress].user.busy = 0;
+    return (finalCost);
+   
+}
 
 
 }
