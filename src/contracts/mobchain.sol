@@ -38,21 +38,22 @@ contract MobChain {
     }
 
     function addUser(string _name, bool _carType) payable public {
-        require(msg.value > 0.25 ether);
+        //require(msg.value > 0.25 ether);
+        uint256 init_coins = 0.2 ether; //remove this when payable with ether!
         accounts[msg.sender].name = _name;
         accounts[msg.sender].carLender.carType = _carType;
         accounts[msg.sender].carLender.available = true;
 
         //give mobcoins to user
         MobCoin mobcoin = MobCoin(mobcoinAddress);
-        mobcoin.transferFrom(bankAddress,msg.sender, msg.value * 1000);
+        //mobcoin.transferFrom(bankAddress,msg.sender, msg.value * 1000);
+        mobcoin.transferFrom(bankAddress,msg.sender, init_coins * 1000);
 
         //initialize reptokens and sustokens to 50
         RepToken reptoken = RepToken(reptokenAddress);
         reptoken.update(msg.sender,50);
         SusToken sustoken = SusToken(sustokenAddress);
         sustoken.update(msg.sender,50);
-
     }
 
     function getBankBalance() public view returns (uint256 _balance) {
