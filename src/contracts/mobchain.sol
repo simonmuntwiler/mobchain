@@ -59,58 +59,57 @@ contract MobChain {
         else {
             return (expCost);
         } 
-}
-
-function getCost(int256 distance, int256 additionalCost) public returns(int256) {
-    int256 distancePrice = 1;
-    int256 cost = distance * distancePrice;
-    int256 discountFactor = getDiscount();
-    int256 expCost = cost * discountFactor / 100000 + additionalCost;
-    return (expCost);
-}
-
-function getDiscount() public pure returns(int256) {
-    //RepToken.balanceOf(userAddress) * 1000;
-    //SusToken.balanceOf(userAddress);
-    int256 repBalance = 50000;
-    int256 susBalance = 100000;
-    int256 discountFactor = 120000 -repBalance / 100 * 20 -susBalance / 100 * 20;
-    return (discountFactor);
-}
-
-function rate(uint256 carCondition) public {
-    address lenderAddress = accounts[userAddress].carUser.lenderAddress;
-    address preuserAddress = accounts[lenderAddress].carLender.preuserAddress;
-    require(preuserAddress != 0x0)
-    if (carCondition < accounts[lenderAddress].carLender.carCondition) {
-        //lower trust coins 
     }
-    else {
-        //increase trust coins
+
+    function getCost(int256 distance, int256 additionalCost) public returns(int256) {
+        int256 distancePrice = 1;
+        int256 cost = distance * distancePrice;
+        int256 discountFactor = getDiscount();
+        int256 expCost = cost * discountFactor / 100000 + additionalCost;
+        return (expCost);
     }
-    accounts[lenderAddress].carLender.preuserAddress = 0x0;
-    accounts[lenderAddress].carLender.carCondition = carCondition;
-}
 
-function arrive() public pure returns(int256) {
+    function getDiscount() public pure returns(int256) {
+        //RepToken.balanceOf(userAddress) * 1000;
+        //SusToken.balanceOf(userAddress);
+        int256 repBalance = 50000;
+        int256 susBalance = 100000;
+        int256 discountFactor = 120000 -repBalance / 100 * 20 -susBalance / 100 * 20;
+        return (discountFactor);
+    }
 
-    require(accounts[userAddress].carUser.busy == 0);
-    accounts[userAddress].carUser.busy = 1;
-    accounts[accounts[userAddress].carUser.addressLender].carLender.available = 0;
+    function rate(uint256 carCondition) public {
+        address lenderAddress = accounts[userAddress].carUser.lenderAddress;
+        address preuserAddress = accounts[lenderAddress].carLender.preuserAddress;
+        require(preuserAddress != 0x0)
+        if (carCondition < accounts[lenderAddress].carLender.carCondition) {
+            //lower trust coins 
+        }
+        else {
+            //increase trust coins
+        }
+        accounts[lenderAddress].carLender.preuserAddress = 0x0;
+        accounts[lenderAddress].carLender.carCondition = carCondition;
+    }
 
-    int256 finalCost = accounts[userAddress].carUser.expCost;
+    function arrive() public pure returns(int256) {
+        require(accounts[userAddress].carUser.busy == 0);
+        accounts[userAddress].carUser.busy = 1;
+        accounts[accounts[userAddress].carUser.addressLender].carLender.available = 0;
 
-    //transfer final cost from user to lender
-    MobCoin mobcoin = MobCoin(mobcoinAddress);
-    mobcoin.transfer(accounts[msg.sender].carUser.addressLender, finalCost);
+        int256 finalCost = accounts[userAddress].carUser.expCost;
 
-    //update sustainability
-    if accounts[accounts[userAddress].carUser.addressLender].carLender.carType == 1 {
-        SusToken sustoken = SusToken(sustokenAddress);
-        sustoken.update(msg.sender, );  
+        //transfer final cost from user to lender
+        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        mobcoin.transfer(accounts[msg.sender].carUser.addressLender, finalCost);
+
+        //update sustainability
+        if accounts[accounts[userAddress].carUser.addressLender].carLender.carType == 1 {
+            SusToken sustoken = SusToken(sustokenAddress);
+            sustoken.update(msg.sender, );  
    
    
-   };//1 is electr.car
+    };//1 is electr.car
 
     accounts[accounts[userAddress].carUser.addressLender].carLender.available = 1;
     accounts[userAddress].carLender.preuser = userAddress; 
