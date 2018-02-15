@@ -65,7 +65,7 @@ contract MobChain {
         int256 expCost = getCost(distance, additionalCost);
         accounts[msg.sender].carUser.expCost = expCost;
         MobCoin mobcoin = MobCoin(mobcoinAddress);
-        int256 mobBalance = mobcoin.getBalance(msg.sender);
+        uint256 mobBalance = mobcoin.getBalance(msg.sender);
         
         if (mobBalance < expCost) {
             return (-1);
@@ -92,25 +92,25 @@ contract MobChain {
     }
 
     function rate(uint256 carCondition) public {
-        address lenderAddress = accounts[msg.sender].carUser.lenderAddress;
-        address preuserAddress = accounts[lenderAddress].carLender.preuserAddress;
-        require(preuserAddress != 0x0);
+        address addressLender = accounts[msg.sender].carUser.addressLender;
+        address addressPreuser = accounts[addressLender].carLender.addressPreuser;
+        require(addressPreuser != 0x0);
         RepToken reptoken = RepToken(reptokenAddress);
-        if (carCondition < accounts[lenderAddress].carLender.carCondition) {
-            reptoken.update(preuserAddress, -5);
+        if (carCondition < accounts[addressLender].carLender.carCondition) {
+            reptoken.update(addressPreuser, -5);
         } else {
-            reptoken.update(preuserAddress, 1);
+            reptoken.update(addressPreuser, 1);
         }
 
-        accounts[lenderAddress].carLender.preuserAddress = 0x0;
-        accounts[lenderAddress].carLender.carCondition = carCondition;
+        accounts[addressLender].carLender.addressPreuser = 0x0;
+        accounts[addressLender].carLender.carCondition = carCondition;
     }
 
     function arrive() public pure returns(int256) {
         require(accounts[msg.sender].carUser.busy == 0);
         accounts[msg.sender].carUser.busy = 1;
-        address lenderAddress = accounts[msg.sender].carUser.addressLender;
-        accounts[lenderAddress].carLender.available = 0;
+        address addressLender = accounts[msg.sender].carUser.addressLender;
+        accounts[addressLender].carLender.available = 0;
 
         int256 finalCost = accounts[msg.sender].carUser.expCost;
 
@@ -127,8 +127,8 @@ contract MobChain {
         sustoken.update(msg.sender, -5); 
         }
 
-        accounts[lenderAddress].carLender.available = 1;
-        accounts[lenderAddress].carLender.preuser = msg.sender; 
+        accounts[addressLender].carLender.available = 1;
+        accounts[addressLender].carLender.preuser = msg.sender; 
         accounts[msg.sender].carUser.busy = 0;
         return (finalCost);
     }
