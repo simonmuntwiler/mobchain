@@ -52,7 +52,9 @@ contract MobChain {
         userAddress = msg.sender;
         expCost = getCost(int256 distance, int256 additionalCost);
         accounts[userAddress].carUser.expCost = expCost;
-        int256 mobBalance = 10000; // read out balance of user
+        MobCoin mobcoin = MobCoin(mobcoinAddress);
+        int256 mobBalance = mobcoin.balanceOf[msg.sender];
+        
         if (mobBalance < expCost) {
             return (-1);
         }
