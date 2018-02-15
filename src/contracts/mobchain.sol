@@ -55,13 +55,13 @@ contract MobChain {
 
     }
 
-    function getBankBalance() public returns (uint256 _balance) {
+    function getBankBalance() public view returns (uint256 _balance) {
         
         MobCoin mobcoin = MobCoin(mobcoinAddress);
         _balance = mobcoin.getBalance(bankAddress);
     }
 
-    function getUserBalance() public returns (uint256 _balance) {
+    function getUserBalance() public view returns (uint256 _balance) {
         
         MobCoin mobcoin = MobCoin(mobcoinAddress);
         _balance = mobcoin.getBalance(msg.sender);
