@@ -110,8 +110,8 @@ contract MobChain {
     function getDiscount() public view returns(uint256) {
         RepToken reptoken = RepToken(reptokenAddress);//RepToken.balanceOf(userAddress) * 1000;
         SusToken sustoken = SusToken(sustokenAddress);//SusToken.balanceOf(userAddress);
-        uint256 repBalance = uint256(reptoken.getBalance(msg.sender));
-        uint256 susBalance = uint256(sustoken.getBalance(msg.sender));
+        uint256 repBalance = uint256(reptoken.getBalance(msg.sender)) * 1000;
+        uint256 susBalance = uint256(sustoken.getBalance(msg.sender)) * 1000;
         uint256 discountFactor = 120000 - repBalance / 100 * 20 - susBalance / 100 * 20;
         return (discountFactor);
     }
