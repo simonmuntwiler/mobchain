@@ -27,6 +27,7 @@ contract MobChain {
     address mobcoinAddress;
     address reptokenAddress;
     address sustokenAddress;
+    address[] public userA;
 
     address bankAddress = this;
     
@@ -52,8 +53,14 @@ contract MobChain {
         reptoken.update(msg.sender,50);
         SusToken sustoken = SusToken(sustokenAddress);
         sustoken.update(msg.sender,50);
+        userA.push(msg.sender) -1;
 
     }
+    
+    function getUser() public returns {
+        return userA;
+    }
+
 
     function getBankBalance() public view returns (uint256 _balance) {
         
