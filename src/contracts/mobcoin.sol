@@ -3,6 +3,7 @@ pragma solidity ^0.4.16;
 interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }
 
 contract MobCoin {
+
     // Public variables of the token
     string public name;
     string public symbol;
@@ -37,6 +38,10 @@ contract MobCoin {
     modifier onlyOwner() {
         require(msg.sender == owner);
         _;
+    }
+
+    function getBalance(address addr) public returns (uint256) {
+        return balanceOf[addr];
     }
 
     /**
@@ -82,8 +87,6 @@ contract MobCoin {
      * @param _value the amount to send
      */
     function transferFrom(address _from, address _to, uint256 _value) public onlyOwner() returns (bool success) {
-        require(_value <= allowance[_from][msg.sender]);     // Check allowance
-        allowance[_from][msg.sender] -= _value;
         _transfer(_from, _to, _value);
         return true;
     }

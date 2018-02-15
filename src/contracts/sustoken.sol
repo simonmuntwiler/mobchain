@@ -42,4 +42,8 @@ contract SusToken {
     function update(address _address, int16 _value) public onlyOwner() {
         _update(_address, _value);
     }
+
+    function getBalance(address addr) public returns (int16) {
+        return balanceOf[addr];
+    }
 }
