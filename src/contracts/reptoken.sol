@@ -10,7 +10,7 @@ contract RepToken {
     int test;
 
     // This creates an array with all balances
-    mapping (address => int8) public balanceOf;
+    mapping (address => int16) public balanceOf;
 
 
     /**
@@ -28,7 +28,7 @@ contract RepToken {
     /**
      * Internal update, only can be called by this contract
      */
-    function _update(address _address, int8 _value) internal {
+    function _update(address _address, int16 _value) internal {
         // Prevent transfer to 0x0 address. Use burn() instead
         require(_address != 0x0);
         // Check if the sender has enough
@@ -41,7 +41,7 @@ contract RepToken {
     /**
      * Update Reputation
      */
-    function update(address _address, int8 _value) public onlyOwner() {
+    function update(address _address, int16 _value) public onlyOwner() {
         _update(_address, _value);
     }
 }
