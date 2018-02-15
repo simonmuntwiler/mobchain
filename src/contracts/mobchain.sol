@@ -48,7 +48,7 @@ function getDiscount() public pure returns(int256) {
     //SusToken.balanceOf(userAddress);
     int256 repBalance = 50000;
     int256 susBalance = 100000;
-    int256 discountFactor = 12000 -repBalance / 100 * 20 -susBalance / 100 * 20;
+    int256 discountFactor = 120000 -repBalance / 100 * 20 -susBalance / 100 * 20;
     return (discountFactor);
 }
 
