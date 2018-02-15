@@ -39,14 +39,15 @@ contract MobChain {
     }
 
     function addUser(string _name, bool _carType) payable public {
-        require(msg.value > 0.25 ether);
+        //require(msg.value >= 0.25 ether);
         accounts[msg.sender].name = _name;
         accounts[msg.sender].carLender.carType = _carType;
         accounts[msg.sender].carLender.available = true;
 
         //give mobcoins to user
         MobCoin mobcoin = MobCoin(mobcoinAddress);
-        mobcoin.transferFrom(bankAddress,msg.sender, msg.value * 1000);
+        //mobcoin.transferFrom(bankAddress,msg.sender, msg.value * 1000);
+        mobcoin.transferFrom(bankAddress,msg.sender, (0.25 ether) * 1000); //remove this when paying works
 
         //initialize reptokens and sustokens to 50
         RepToken reptoken = RepToken(reptokenAddress);
