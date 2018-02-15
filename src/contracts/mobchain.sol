@@ -99,9 +99,9 @@ contract MobChain {
         if (mobBalance < expCost) {
             return (-1);
         } else {
-            return (int256(expCost));
             accounts[msg.sender].carUser.expCost = expCost;
             accounts[msg.sender].carUser.addressLender = addressLender;
+            return (int256(expCost));
         } 
     }
 
