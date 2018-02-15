@@ -39,6 +39,7 @@ contract MobChain {
     }
 
     function addUser(string _name, bool _carType) payable public {
+        //for now dont user ether
         //require(msg.value >= 0.25 ether);
         accounts[msg.sender].name = _name;
         accounts[msg.sender].carLender.carType = _carType;
