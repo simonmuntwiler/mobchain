@@ -89,7 +89,6 @@ contract MobChain {
 
     function carRequest(uint256 distance, uint256 additionalCost, address addressLender) public view returns(int256) {
         uint256 expCost = getCost(distance, additionalCost);
-        accounts[msg.sender].carUser.expCost = expCost;
         MobCoin mobcoin = MobCoin(mobcoinAddress);
         uint256 mobBalance = mobcoin.getBalance(msg.sender);
         
@@ -97,6 +96,7 @@ contract MobChain {
             return (-1);
         } else {
             return (int256(expCost));
+            accounts[msg.sender].carUser.expCost = expCost;
             accounts[msg.sender].carUser.addressLender = addressLender;
         } 
     }
