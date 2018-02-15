@@ -47,6 +47,12 @@ contract MobChain {
         MobCoin mobcoin = MobCoin(mobcoinAddress);
         mobcoin.transferFrom(bankAddress,msg.sender, msg.value * 1000);
 
+        //initialize reptokens and sustokens to 50
+        RepToken reptoken = RepToken(reptokenAddress);
+        reptoken.update(msg.sender,50);
+        SusToken sustoken = SusToken(sustokenAddress);
+        sustoken.update(msg.sender,50);
+
     }
 
     function getBankBalance() public returns (uint256 _balance) {
