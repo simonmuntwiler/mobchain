@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html>
+<html>
+<title>MobChain Demo App</title>
+<script src="jquery-3.2.1.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" href="images/small_icon.png">
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="#report" class="w3-bar-item w3-button w3-padding-large w3-hide-small">REPORT</a>
+    <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ABOUT</a>
+  </div>
+</div>
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="#report" class="w3-bar-item w3-button w3-padding-large">REPORT</a>
+  <a href="#about" class="w3-bar-item w3-button w3-padding-large">ABOUT</a>
+</div>
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+  <!-- The Demo Section -->
+  <div class="w3-grey">
+    <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
+      <h1 class="w3-center w3-text-black">MobChain Demo</h1>
+      <p class="w3-opacity w3-center"><i>Shared Mobility System</i></p><br>
+
+      <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+        <div class="w3-third w3-margin-bottom">
+          <div class="w3-container w3-white">
+            <img src="images/icon.png" width="200px">
+          </div>
+        </div>
+        
+        <div class="w3-third w3-margin-bottom">
+          <div class="w3-container w3-white">
+            <p><b>Add User</b></p>
+            <p>Name:<span style="display:inline-block; width:5mm;"></span><input id="inputName" type="text" size="14"></input></p>
+            <p>Car Type:<span style="display:inline-block; width:5mm;"></span>
+            <select id="carType">
+                <option></option>
+                <option>EV</option>
+                <option>Normal Car</option>
+          </select></p>
+            <button class="w3-button w3-black w3-margin-bottom addUserButton">Add User</button>
+          </div>
+        </div>
+
+        <!-- <div class="w3-third w3-margin-bottom"> -->
+          <!-- <div class="w3-container w3-white"> -->
+            <!-- <p><b>Request MobCoins</b></p> -->
+            <!-- <p><input type="number"></input></p> -->
+            <!-- <button class="w3-button w3-black w3-margin-bottom requestCoinButton">Request MobCoins</button> -->
+          <!-- </div> -->
+        <!-- </div> -->
+        <div class="w3-third w3-margin-bottom">
+          <div class="w3-container w3-white">
+            <p><b>Show User</b></p>
+            <p id="requestedUserBalance">User Balance</p>
+            <p id="requestedUserRep">User Reputation</p>
+            <p id="requestedUserSus">User Sustainability</p>
+            <button class="w3-button w3-black w3-margin-bottom showUserButton">Show User</button>
+          </div>
+        </div>
+      </div>
+
+      <ul class="w3-ul w3-border w3-white w3-text-grey w3-half">
+          <li class="w3-padding">Start Point <span style="display:inline-block; width:5mm;"></span>
+          <select name="start" id="start">
+            <option value="zurich">Zurich HB</option>
+          </select></li>
+        <li class="w3-padding">End Point <span style="display:inline-block; width:5mm;"></span>
+          <select id="selectedEndPoint" name="end">
+            <!-- <option value="zurich">Zurich</option> -->
+            <option value="bern">Zurich Oerlikon</option>
+            <option value="basel">Zurich Altstetten</option>
+            <option value="stgallen">Winterthur</option>
+          </select></li>
+        <li class="w3-padding">Car <span style="display:inline-block; width:5mm;"></span>
+          <select id="selectedCar" name="car">
+            <option value="zurich">EV</option>
+            <option value="bern">Normal Car</option>
+          </select></li></ul>
+
+      <ul class="w3-ul w3-border w3-white w3-text-grey w3-half">
+        <li class="w3-padding">&nbsp; <span style="display:inline-block; width:5mm;"></span></li>
+        <li class="w3-padding">&nbsp; <span style="display:inline-block; width:5mm;"></span></li>
+        <!-- <li class="w3-padding" style="margin: -2.6px -2.6px">As soon as user gets to car she/he will be asked to rate the overall state of the car. On this basis the previous user will be awarded or punished.<span style="display:inline-block; width:5mm;"></span> -->
+          <li class="w3-padding">Rate previous user <span style="display:inline-block; width:5mm;"></span>
+          <select id="rating" name="end">
+            <!-- <option value="zurich">Zurich</option> -->
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select></li>
+          </li>
+        <!-- <ul style="list-style-type:none; padding-left:1"> -->
+        <!-- <li> -->
+            <!-- <button class="w3-button w3-black w3-margin-bottom rateButton">Rate</button> -->
+        <!-- </li></ul> -->
+      <!-- <ul class="w3-ul w3-border w3-white w3-text-grey w3-half" style="margin:-25px 0"> -->
+        </li></ul>
+        <ul style="list-style-type:none; padding-left:0">
+        <li>
+            <button class="w3-button w3-black w3-margin-bottom requestCarButton">Request Car</button>
+            <span style="display:inline-block; width:195px"></span>
+            <button class="w3-button w3-black w3-margin-bottom driveButton">Drive</button>
+            <span style="display:inline-block; width:0px"></span>
+            <button class="w3-button w3-black w3-margin-bottom rateButton">Rate</button>
+        </li></ul>
+      <br>
+      <ul class="w3-ul w3-border w3-white w3-text-grey">
+        <li class="w3-padding" id="view">Debugging</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!--Report-->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="report">
+    <h2 class="">Report/Presentation</h2>
+    <p class="w3-opacity"><a href="https://www.google.ch" onFocus="if(this.blur)this.blur()">Report Download Link</a></p>
+    <p class="w3-opacity"><a href="https://www.google.ch" onFocus="if(this.blur)this.blur()">Presentation Download Link</a></p>
+  </div>
+
+  <!--About-->
+  <div class="w3-grey" id="about">
+    <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
+      <h2 class="w3-center">About</h2>
+      <p class="w3-justify">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-32 w3-center w3-opacity w3-light-grey w3-xlarge">
+  <p class="w3-medium">Template by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+<script>
+    var contractAddress = "0x695812015959805765a768bfc81dec406f1ae625"; // in Rinkeby testnet!
+    var contractAbi = [{
+        "constant": false,
+        "inputs": [{
+            "name": "_name",
+            "type": "string"
+        }, {
+            "name": "_carType",
+            "type": "bool"
+        }],
+        "name": "addUser",
+        "outputs": [],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+    }, {
+        "constant": true,
+        "inputs": [{
+            "name": "distance",
+            "type": "uint256"
+        }, {
+            "name": "additionalCost",
+            "type": "uint256"
+        }, {
+            "name": "addressLender",
+            "type": "address"
+        }],
+        "name": "carRequest",
+        "outputs": [{
+            "name": "",
+            "type": "int256"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "constant": true,
+        "inputs": [{
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "userA",
+        "outputs": [{
+            "name": "",
+            "type": "address"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "constant": false,
+        "inputs": [{
+            "name": "distance",
+            "type": "uint256"
+        }, {
+            "name": "additionalCost",
+            "type": "uint256"
+        }, {
+            "name": "addressLender",
+            "type": "address"
+        }],
+        "name": "arrive",
+        "outputs": [{
+            "name": "",
+            "type": "uint256"
+        }],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "constant": true,
+        "inputs": [],
+        "name": "getBankBalance",
+        "outputs": [{
+            "name": "_balance",
+            "type": "uint256"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "constant": true,
+        "inputs": [{
+            "name": "distance",
+            "type": "uint256"
+        }, {
+            "name": "additionalCost",
+            "type": "uint256"
+        }],
+        "name": "getCost",
+        "outputs": [{
+            "name": "",
+            "type": "uint256"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "constant": true,
+        "inputs": [],
+        "name": "getUserBalance",
+        "outputs": [{
+            "name": "_balance",
+            "type": "uint256"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "constant": false,
+        "inputs": [{
+            "name": "carCondition",
+            "type": "uint8"
+        }, {
+            "name": "addressLender",
+            "type": "address"
+        }, {
+            "name": "addressPreuser",
+            "type": "address"
+        }],
+        "name": "rate",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "constant": true,
+        "inputs": [],
+        "name": "getDiscount",
+        "outputs": [{
+            "name": "",
+            "type": "uint256"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "constant": true,
+        "inputs": [{
+            "name": "addr",
+            "type": "address"
+        }],
+        "name": "getUserName",
+        "outputs": [{
+            "name": "_name",
+            "type": "string"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "constant": true,
+        "inputs": [],
+        "name": "getUserSus",
+        "outputs": [{
+            "name": "_sus",
+            "type": "int16"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "constant": false,
+        "inputs": [],
+        "name": "numUser",
+        "outputs": [{
+            "name": "",
+            "type": "uint256"
+        }],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "constant": true,
+        "inputs": [],
+        "name": "getUserRep",
+        "outputs": [{
+            "name": "_reputation",
+            "type": "int16"
+        }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "inputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    }];
+
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    if (typeof web3 !== 'undefined') {
+        // Use Mist/MetaMask's provider
+        $('#view').text('I have web3!!!');
+        window.web3 = new Web3(web3.currentProvider);
+    } else {
+        var errorMsg = 'I doesn\'t have web3 :( Please open in Google Chrome Browser and install the Metamask extension.';
+        $('#view').text(errorMsg);
+        console.log(errorMsg);
+    }
+
+    $(window).on('load', function() {
+        // create instance of contract object that we use to interface the smart contract
+        var contractInstance = web3.eth.contract(contractAbi).at(contractAddress);
+        var carArray = [1,1,0];
+        var distanceArray = [5,6,24];
+        var additionalCost = 5;
+        var addressLender = "0xE36f336068c4b0288443726CdBF3D1F29b21d272"
+        var addressPre = "0x495c89cF8085130cd6861B02E8B74C02f61166Ec"
+        contractInstance.getBankBalance(function(error, balance) {
+            if (error) {
+                    var errorMsg = 'error reading greeting from smart contract: ' + error;
+                    $('#view').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#view').text("Bank Balance: " + balance/1e+18);
+        });
+        
+        $('.addUserButton').on('click', function() {
+            var car = carArray[document.getElementById("carType").selectedIndex];
+            var user = $('#inputName').val();
+            addUser(contractInstance, user, car)
+        });
+
+        $('.requestCoinButton').on('click', function() {
+            requestCoin(contractInstance)
+        });
+        
+        $('.showUserButton').on('click', function() {
+            showUser(contractInstance)
+        });
+        
+        $('.requestCarButton').on('click', function() {
+            var distance = distanceArray[document.getElementById("selectedEndPoint").selectedIndex];
+            requestCar(contractInstance, distance, additionalCost, addressLender)
+        });
+        
+        $('.driveButton').on('click', function() {
+            var distance = distanceArray[document.getElementById("selectedEndPoint").selectedIndex];
+            drive(contractInstance, distance, additionalCost, addressLender);
+        });
+        
+        $('.rateButton').on('click', function() {
+            var rating = document.getElementById("rating").selectedIndex;
+            rateUser(contractInstance, rating, addressLender, addressPre);
+        });
+    });
+    
+    function addUser(contractInstance, user, car) {
+        contractInstance.addUser(user, car, function(error) {
+            if (error) {
+                var errorMsg = 'error reading greeting from smart contract: ' + error;
+                $('#view').text(errorMsg);
+                console.log(errorMsg);
+                return;
+            }
+            $('#view').text("Successful creation of User with " + user + ", " + car);
+        });
+    }
+    
+    function showUser(contractInstance) {
+        contractInstance.getUserBalance(function(error, balance) {
+            if (error) {
+                    var errorMsg = 'error reading greeting from smart contract: ' + error;
+                    $('#requestedUserBalance').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#requestedUserBalance').text("User Balance: " + balance/1e+18);
+        });
+        contractInstance.getUserRep(function(error, rep) {
+            if (error) {
+                    var errorMsg = 'error reading greeting from smart contract: ' + error;
+                    $('#requestedUserRep').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#requestedUserRep').text("User RepToken: " + rep);
+        });
+        contractInstance.getUserSus(function(error, sus) {
+            if (error) {
+                    var errorMsg = 'error reading greeting from smart contract: ' + error;
+                    $('#requestedUserSus').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#requestedUserSus').text("User SusToken: " + sus);
+        });
+    }
+    
+    function requestCar(contractInstance, dist, addCost, addressLender) {
+        contractInstance.carRequest(dist, addCost, addressLender, function(error, expectedCost) {
+            if (error) {
+                    var errorMsg = 'error reading greeting from smart contract: ' + error;
+                    $('#view').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#view').text("Expected Cost: " + expectedCost/1e+18);
+        });
+    }
+    
+    function drive(contractInstance, dist, addCost, addressLender) {
+        contractInstance.arrive(dist, addCost, addressLender, function(error, effCost) {
+            if (error) {
+                    var errorMsg = 'error reading greeting from smart contract: ' + error;
+                    $('#view').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#view').text("Transaction at: " + effCost);
+        });
+    }
+    
+    function rateUser(contractInstance, carCond, addressLender, addressPre) {
+        contractInstance.rate((carCond+1), addressLender, addressPre, function(error) {
+            if (error) {
+                    var errorMsg = 'error reading greeting from smart contract: ' + error;
+                    $('#view').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#view').text(carCond + "," + addressLender+"," + addressPre);
+        });
+    }
+
+</script>
+</body>
+</html>
