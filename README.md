@@ -1,7 +1,7 @@
 ### MobChain
 This is a project done during the BIOTS2018 Hackathon. The aim of mobchain is to offer a decentralized car sharing place.
 
-The following is included in the folders:
+The following is included in the repository:
 
 * doc:            documentation
 * example_webui:  An example web interface recieved during the course
@@ -16,7 +16,6 @@ Create new user: Add your name and car type, click "Add User", and confirm trans
 Request Car: Select start and end location and the car type. Currently only two lenders, one with a EV and one with one with a normal car.
 
 ## Deploying the contracts using remix
-Requirements: FireF with MetaMask plugin
 1. Clone repository
 2. In MetaMask, select the Ropsten test network and ensure you have some funds in your wallet
 3. Open http://remix.ethereum.org/ and add the contracts in src/contracts
