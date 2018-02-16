@@ -19,6 +19,7 @@ body {font-family: "Lato", sans-serif}
   <div class="w3-bar w3-black w3-card">
     <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="#video" class="w3-bar-item w3-button w3-padding-large w3-hide-small">VIDEO</a>
     <a href="#report" class="w3-bar-item w3-button w3-padding-large w3-hide-small">REPORT</a>
     <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ABOUT</a>
   </div>
@@ -53,7 +54,7 @@ body {font-family: "Lato", sans-serif}
             <p>Car Type:<span style="display:inline-block; width:5mm;"></span>
             <select id="carType">
                 <option></option>
-                <option>EV</option>
+                <option>Electric Car</option>
                 <option>Normal Car</option>
           </select></p>
             <button class="w3-button w3-black w3-margin-bottom addUserButton">Add User</button>
@@ -92,7 +93,7 @@ body {font-family: "Lato", sans-serif}
           </select></li>
         <li class="w3-padding">Car <span style="display:inline-block; width:5mm;"></span>
           <select id="selectedCar" name="car">
-            <option value="zurich">EV</option>
+            <option value="zurich">Electric Car</option>
             <option value="bern">Normal Car</option>
           </select></li></ul>
 
@@ -131,23 +132,27 @@ body {font-family: "Lato", sans-serif}
     </div>
   </div>
 
+  <!--Video-->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="video">
+    <h2 class="">Demo Video</h2>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/zGg5Ko9_ryM" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    </div>
 
   <!--Report-->
-  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="report">
-    <h2 class="">Report/Presentation</h2>
-    <p class="w3-opacity"><a href="https://www.google.ch" onFocus="if(this.blur)this.blur()">Report Download Link</a></p>
-    <p class="w3-opacity"><a href="https://www.google.ch" onFocus="if(this.blur)this.blur()">Presentation Download Link</a></p>
-  </div>
-
-  <!--About-->
-  <div class="w3-grey" id="about">
-    <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
-      <h2 class="w3-center">About</h2>
-      <p class="w3-justify">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+  <div class="w3-grey" id="report">
+    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px">
+      <h2 class="w3-center">Report/Presentation</h2>
+      <p class="w3-opacity"><a href="https://www.google.ch" onFocus="if(this.blur)this.blur()">Report Download Link</a></p>
+      <p class="w3-opacity"><a href="https://www.google.ch" onFocus="if(this.blur)this.blur()">Presentation Download Link</a></p>
+      <p class="w3-opacity"><a href="https://www.google.ch" onFocus="if(this.blur)this.blur()">Pitch Download Link</a></p>
     </div>
   </div>
 
-
+  <!--About-->
+    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="about">
+    <h2 class="">About</h2>
+      <p class="w3-justify">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+  </div>
 </div>
 
 <!-- Footer -->
