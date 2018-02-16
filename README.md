@@ -1,4 +1,4 @@
-### MobChain
+## MobChain
 This is a project done during the BIOTS2018 Hackathon. The aim of mobchain is to offer a decentralized car sharing place.
 
 The following is included in the repository:
@@ -11,11 +11,11 @@ The following is included in the repository:
 
 Go to https://n.ethz.ch/~jsieber/ to interact with the currently deployed contracts on the Ropsten test network. Make sure you have installed the MetaMask browser plugin and have selected the Ropsten test network.
 
-## User Interface
+### User Interface
 Create new user: Add your name and car type, click "Add User", and confirm transaction. You will be rewarded 250 MOB Tokens.
 Request Car: Select start and end location and the car type. Currently only two lenders, one with a EV and one with one with a normal car.
 
-## Deploying the contracts using remix
+### Deploying the contracts using remix
 1. Clone repository
 2. In MetaMask, select the Ropsten test network and ensure you have some funds in your wallet
 3. Open http://remix.ethereum.org/ and add the contracts in src/contracts
