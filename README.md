@@ -9,7 +9,7 @@ The following is included in the repository:
 * src:            Source code of the mobchain project
 * video:          Screen cast of homepage usage
 
-Go to https://n.ethz.ch/~jsieber/ to interact with the currently deployed contracts on the Ropsten test network. Make sure you have installed the MetaMask browser plugin and have selected the Ropsten test network.
+Go to http://mobchain.ch to interact with the currently deployed contracts on the Ropsten test network. Make sure you have installed the MetaMask browser plugin and have selected the Ropsten test network.
 
 ### User Interface
 Create new user: Add your name and car type, click "Add User", and confirm transaction. You will be rewarded 250 MOB Tokens.
